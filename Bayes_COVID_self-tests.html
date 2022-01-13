@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>What Bayes' Theorem and COVID-19 self-tests can tell you</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+
+<p>The accuracy of COVID-19 self tests varies widely depending on the manufacturer.<br>
+<a href="https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-021-06528-3">https://bmcinfectdis.biomedcentral.com/articles/10.1186/s12879-021-06528-3</a>
+</p>
+<p>In the Netherlands, of the people who get a PCR test, 90% of people who have a positive self test also have a positive PCR test.<br>
+<a href = "https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/testen/zelftesten-en-het-coronavirus/gebruik-en-resultaat-corona-zelftest">https://www.rijksoverheid.nl/onderwerpen/coronavirus-covid-19/testen/zelftesten-en-het-coronavirus/gebruik-en-resultaat-corona-zelftest</a>
+</p>
+<p>The sensitivity and specificity vary from manufacturer to manufacturer, but let's say that it is 85% sensitive and 99% specific:<br>
+<a href = "https://www.ntvg.nl/artikelen/het-gebruik-van-de-coronazelftest-perspectief">https://www.ntvg.nl/artikelen/het-gebruik-van-de-coronazelftest-perspectief</a>
+</p>
+<p>The result of a self test can be regarded as additional information, given an initial probability.
+</p>
+<p>Bayes' theorem is all about adjusting our estimates based on the introduction of new information. The easiest way to understand Bayes is to think about the Monte Hall problem. There are 3 doors. Behind one is a new car. Behind the other two doors are goats. You are asked to pick one door; you pick door A. There is a 1/3 chance that you have picked correctly. Monty will open one of the other two doors: it has a goat. (It will always have a goat - Monty won't open the door with the car.) Do you now stick with your original guess or change to door C? The answer is that you should change to door C, because Monty will never open the door that has the car behind it, so you now know that of the two remaining doors, one of them has the car. There was only a 1/3 chance that you picked it on the first try, which means there is now a 2/3 chance that door C has the car.<br>
+<a href = "https://brilliant.org/wiki/monty-hall-problem/" >https://brilliant.org/wiki/monty-hall-problem/</a>
+</p>
+<p>Let's bring this logic back to COVID testing.
+</p>
+<p>Let's say that the current prevalence of COVID-19 is 1%; that is, 1% of people currently in your country have COVID-19. That means there's a 1% probability that any random person has COVID, including yourself. You take a self-test; it is positive. What is the probability that you actually have COVID?<br>
+The easiest way to calculate this is to use an online calculator, such as this one:<br>
+<a href ="http://medcalc.com/bayes.html">http://medcalc.com/bayes.html</a><br>
+(the calculations are explained at the bottom of the page).
+</p>
+<p>If we enter the values of 0.01 (indicating a 1% prevalence), 0.85 sensitivity and 0.99 specificity, we see that the probability of having COVID if you have a positive self-test is 0.462, or a little less than half.<br>
+To run through the calculation:<br>
+    Post-test Probability = Post-test Odds / (1 + Post-test Odds) <br>
+	Post-test Odds = Pre-test Odds x Likelihood Ratio <br>
+	Pre-test Odds = Pre-test Prob / (1 - Pre-test Prob) <br>
+	Positive Likelihood Ratio = SENS / (1-SPEC)<br>
+Thus:<br>
+Positive Likelihood Ratio = .85 / (1 - .99) = 85<br>
+Pre-test odds = .01 / (1 - .01) = 0.010101010101<br>
+Post-test odds = 0.010101010101 x 85 = 0.858585858585<br>
+Post-test probability = 0.858585858585 / (1 + 0.858585858585) = 0.461956521739
+</p>
+<p>Logically, this makes sense. If the test is 99% accurate, then if we randomly test 100 people we would expect to get 1 who has a false positive test. Our prevalence is 1% so we also expect to get 1 with a true positive test. We then have 2 people with a positive test, 50% of which are false positives. As we can see from the calculation above, the actual calculation is a little more complicated, but simple math still gets us in the right ball park.
+</p>
+<p>However, if you have symptoms, it is much more likely that you have COVID. This changes our prior probability. Right now, about 20% of the PCR tests from the GGD are positive; if we assume that the GGD tests mostly represent people with COVID-like symptoms, then we can say that (right now) there's a 20% prior probability of having COVID if you have symptoms.
+If we enter .2 for the prior in our calculator, we get a probability of 0.9551. In other words, if you have symptoms and a positive test, there's a 95% chance that you actually have COVID.
+</p>
+<p>We can also make calculations for negative tests:<br>
+No symptoms + negative self-test = 99.8% chance that you do not have COVID<br>
+Symtomps + negative self-test = 95% chance that you do not have COVID (but still a 5% chance that you do, which is still 5x higher than the 1% for any random asymptomatic person with no test).
+</p>
+<p>It's important to keep in mind that these numbers will change dramatically with varying prevalence:
+</p>
+<table>
+<tr><th></th><th colspan=2>Prevalence 1%</th><th colspan=2>Prevalence 0.5%</th><th colspan=2>Prevalence 2%</th></tr>
+<tr><th></th><th>Has COVID</th><th>No COVID</th><th>Has COVID</th><th>No COVID</th><th>Has COVID</th><th>No COVID</th></tr>
+<tr><th>Symptoms + positive test</th><td>95%</td><td>5%</td><td>93%</td><td>7%</td><td>97%</td><td>3%</td></tr>
+<tr><th>Symptoms + negative test</th><td>5%</td><td>95%</td><td>3%</td><td>97%</td><td>6%</td><td>94%</td></tr>
+<tr><th>No symptoms + positive test</th><td>46%</td><td>54%</td><td>30%</td><td>70%</td><td>63%</td><td>47%</td></tr>
+<tr><th>No symptoms + negative test</th><td>0.2%</td><td>99.8%</td><td>0.1%</td><td>99.9%</td><td>0.4%</td><td>99.6%</td></tr>
+</table>
+(Based on historical data, I estimated the prevalence to be 15% in symptomatic people when the national prevalence is 0.5%. For a prevalence of 2%, I used a prevalence of 30% in symptomatic people.)
+
+<p>As you might imagine, these numbers will also change with the accuracy of the test. Let's grab the low end of the numbers from this article: a sensitivity of 79% and a specificity of 92%.<br>
+<a href="https://www.mininggazette.com/news/features/2021/12/sensitivity-and-specificity-taking-the-measure-of-at-home-tests/ ">https://www.mininggazette.com/news/features/2021/12/sensitivity-and-specificity-taking-the-measure-of-at-home-tests/ </a>
+</p>
+<table>
+<tr><th></th><th>Has COVID</th><th>No COVID</th></tr>
+<tr><th>Symptoms + positive test</th><td>71%</td><td>29%</td></tr>
+<tr><th>Symptoms + negative test</th><td>5%</td><td>95%</td></tr>
+<tr><th>No symptoms + positive test</th><td>9%</td><td>91%</td></tr>
+<tr><th>No symptoms + negative test</th><td>0.3%</td><td>99.7%</td></tr>
+</table>
+(Using a prevalence of 1% in the general population and 20% in symptomatic people.)
+
+<p>As we can see, even with a kind of lousy test, a negative test + no symptoms is reasonably reassuring. A negative test with symptoms is somewhat reassuring too, but who wants a 5% chance of giving Grandma something horrible? If you have symptoms, it's better to get a PCR test (which is much more accurate). Similarly, if you have no symptoms, a positive test is still worrisome enough to warrent getting a PCR test, especially if the tests on the market in your area are of reasonable quality.
+ </p>
+</body>
+</html>
